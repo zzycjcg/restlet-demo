@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd  
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd  
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd  
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd  
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+
+	<bean id="rest.root" class="org.restlet.ext.spring.SpringComponent"
+		scope="singleton">
+		<property name="defaultTarget" ref="rest.server" />
+	</bean>
+
+	<bean id="rest.server" class="org.restlet.ext.jaxrs.JaxRsApplication"
+		scope="singleton">
+		<property name="objectFactory" ref="rest.factory" />
+		<property name="applications" ref="rest.config" />
+	</bean>
+
+	<bean id="rest.factory" class="com.brave.zhu.rest.application.SpringJaxObjectFactory"
+		scope="singleton">
+		<constructor-arg ref="rest.collection" />
+	</bean>
+
+	<bean id="rest.config" class="com.brave.zhu.rest.application.SpringJaxConfig"
+		scope="singleton">
+		<constructor-arg ref="rest.collection" />
+	</bean>
+
+	<bean id="rest.collection" class="com.brave.zhu.rest.application.JaxBeanCollection"
+		scope="singleton">
+		<property name="beanNames" ref="resources" />
+	</bean>
+</beans>
