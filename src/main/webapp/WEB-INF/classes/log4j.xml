@@ -22,6 +22,7 @@
 	<logger name="com.brave.zhu" additivity="false">
 		<level value="debug" />
 		<appender-ref ref="FileAppender" />
+		<appender-ref ref="ConsoleAppender" />
 	</logger>
 
 	<!-- 根logger的设置 -->
