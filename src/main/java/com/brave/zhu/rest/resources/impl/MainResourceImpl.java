@@ -32,10 +32,23 @@ public class MainResourceImpl implements MainResource
     
     protected Map<String, ?> createResult(String taskId)
     {
+        StringBuilder stringBuilder = new StringBuilder();
+        StackTraceElement[] stes = new Throwable().getStackTrace();
+        for (StackTraceElement ste : stes)
+        {
+            stringBuilder.append("at ")
+                    .append(ste.getClassName())
+                    .append('.')
+                    .append(ste.getMethodName())
+                    .append(" (line:")
+                    .append(ste.getLineNumber())
+                    .append(")")
+                    .append('\n');
+        }
+        log.debug("[StackTrace]\n" + stringBuilder.toString());
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("taskId", taskId);
         result.put("result", "success");
         return result;
     }
-    
 }
